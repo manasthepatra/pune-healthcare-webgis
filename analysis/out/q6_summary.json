@@ -1,0 +1,14 @@
+{
+  "n_points": 30,
+  "n_different_nearest": 11,
+  "median_ratio": 1.5662546535967463,
+  "max_ratio": 7.592137869896267,
+  "worst_point_utm": [
+    378995.8575126902,
+    2045516.8000546945
+  ],
+  "worst_straight_m": 47.08138613534254,
+  "worst_network_m": 357.44837464534316,
+  "worst_straight_nearest": "n7051344982",
+  "worst_network_nearest": "n7051344982"
+}

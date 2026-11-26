@@ -1,0 +1,83 @@
+{
+  "area": "Central Pune (Shivajinagar - Deccan - Peths)",
+  "utm_epsg": 32643,
+  "threshold_m": 1200.0,
+  "threshold_elderly_m": 900.0,
+  "services_total_with_margin": 475,
+  "services_in_area": 243,
+  "q6": {
+    "n_points": 30,
+    "n_different_nearest": 11,
+    "median_ratio": 1.5662546535967463,
+    "max_ratio": 7.592137869896267,
+    "worst_point_utm": [
+      378995.8575126902,
+      2045516.8000546945
+    ],
+    "worst_straight_m": 47.08138613534254,
+    "worst_network_m": 357.44837464534316,
+    "worst_straight_nearest": "n7051344982",
+    "worst_network_nearest": "n7051344982"
+  },
+  "union_area_km2": {
+    "network_isochrones": 13.698822009281088,
+    "straight_buffers": 18.69217205717211,
+    "study_area": 18.69217205717211
+  },
+  "q7": {
+    "threshold_m": 1200.0,
+    "population_unit": "m2 building footprint (PROXY)",
+    "by_network_r9_pct_beyond": 2.6363058732380282,
+    "by_buffer_r9_pct_beyond": 0.0,
+    "by_network_r8_pct_beyond": 0.0,
+    "by_buffer_r8_pct_beyond": 0.0,
+    "by_network_buildings_pct_beyond_(finest_unit)": 0.8559198412463054,
+    "by_ward_pct_beyond": "no analysis/area_wards.geojson provided - add it to aggregate by ward",
+    "worst_served_populated_cell_r9": {
+      "h3": "8960885030fffff",
+      "pop": 21442.02322467888,
+      "dist_m": 1465.862439680181
+    }
+  },
+  "q8": {
+    "threshold_m_4_8kmh": 1200.0,
+    "threshold_m_3_6kmh": 900.0,
+    "r8": {
+      "pct_beyond_4_8": 0.0,
+      "pct_beyond_3_6": 1.9196908017822802,
+      "coverage_lost_pp": 1.9196908017822802
+    },
+    "r9": {
+      "pct_beyond_4_8": 2.6363058732380282,
+      "pct_beyond_3_6": 3.575054753233825,
+      "coverage_lost_pp": 0.9387488799957966
+    },
+    "newly_uncovered_cells_r9": 4,
+    "top_newly_uncovered": [
+      {
+        "h3": "8960885050fffff",
+        "pop": 21691.787658696197,
+        "dist_m": 938.3144083033939,
+        "nearest_name": "Synergy Dental Clinic;synergy dental clinic"
+      },
+      {
+        "h3": "89608850303ffff",
+        "pop": 6670.683138262963,
+        "dist_m": 1108.74445502326,
+        "nearest_name": "Naydu Rugnalay"
+      },
+      {
+        "h3": "89608850307ffff",
+        "pop": 2911.356647019139,
+        "dist_m": 1063.2047722058207,
+        "nearest_name": "Kawediya Hospital"
+      },
+      {
+        "h3": "8960885033bffff",
+        "pop": 0.0,
+        "dist_m": 1152.4680989610424,
+        "nearest_name": "Sancheti Hospital"
+      }
+    ]
+  }
+}
