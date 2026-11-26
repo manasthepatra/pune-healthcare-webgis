@@ -1,0 +1,91 @@
+# Four services on one network. Inside the Compose network each service is reached by
+# its SERVICE NAME (db, geoserver, ...), never localhost.
+name: webgis
+
+services:
+  db:
+    image: postgis/postgis:16-3.5
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-webgis}
+      POSTGRES_USER: ${POSTGRES_USER:-webgis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+      - ./sql/00_extensions.sql:/docker-entrypoint-initdb.d/00_extensions.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks: [gis]
+
+  geoserver:
+    image: docker.osgeo.org/geoserver:2.28.2
+    environment:
+      SKIP_DEMO_DATA: "true"
+      CORS_ENABLED: "true"            # lets the MapLibre client (another origin) call WMS/WFS
+      CORS_ALLOWED_ORIGINS: "*"
+      GEOSERVER_ADMIN_USER: ${GEOSERVER_ADMIN_USER:-admin}
+      GEOSERVER_ADMIN_PASSWORD: ${GEOSERVER_ADMIN_PASSWORD:?set GEOSERVER_ADMIN_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:${GEOSERVER_PORT:-8081}:8080"
+    volumes:
+      - geoserver_data:/opt/geoserver_data
+      - ./data/dem:/opt/geoserver_data/data/dem:ro   # clipped DEM GeoTIFF; inside the GeoServer data dir so the REST coverage store accepts it
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/geoserver/web/ -o /dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 90s
+    networks: [gis]
+
+  # These two images ship no curl/wget, so the healthcheck is a bash TCP connect to the service port.
+  pg_tileserv:
+    image: pramsey/pg_tileserv:latest
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-webgis}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-webgis}
+      TS_CORSORIGINS: "*"
+    ports:
+      - "127.0.0.1:${TILESERV_PORT:-7800}:7800"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/7800"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [gis]
+
+  pg_featureserv:
+    image: pramsey/pg_featureserv:latest
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-webgis}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-webgis}
+      PGFS_SERVER_HTTPPORT: "9000"
+      PGFS_SERVER_CORSORIGINS: "*"
+      PGFS_PAGING_LIMITDEFAULT: "1000"
+      PGFS_PAGING_LIMITMAX: "5000"
+    ports:
+      - "127.0.0.1:${FEATURESERV_PORT:-9000}:9000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/9000"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [gis]
+
+networks:
+  gis:
+
+volumes:
+  postgis_data:
+  geoserver_data:
