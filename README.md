@@ -1,7 +1,7 @@
 # Who can't walk to healthcare? - a Web GIS for central Pune
 
-**Public URL:** _TODO - add your GitHub Pages URL here after the first green workflow run_
-(`https://<user>.github.io/<repo>/`)
+**Public URL:** https://manasthepatra.github.io/pune-healthcare-webgis/
+(static site on GitHub Pages, deployed by the Actions workflow on every push; repo: https://github.com/manasthepatra/pune-healthcare-webgis)
 
 This repository rebuilds the earlier *Nearby location* app (Leaflet + Overpass, kept in [`legacy/`](legacy/)) as a provider/analyst
 Web GIS: OSM data in PostGIS, own WMS/WFS/MVT/OGC API endpoints, real walking-network access analysis with H3 hexagons, and
