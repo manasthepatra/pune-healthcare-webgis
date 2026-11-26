@@ -1,0 +1,171 @@
+[
+  {
+    "id": "hospital",
+    "label": "Hospitals & clinics",
+    "icon": "✚",
+    "color": "#dc2626",
+    "subcategories": [
+      "hospital",
+      "clinic"
+    ],
+    "selectors": [
+      "amenity=hospital",
+      "healthcare=hospital",
+      "amenity=clinic",
+      "healthcare=clinic"
+    ]
+  },
+  {
+    "id": "pharmacy",
+    "label": "Pharmacies",
+    "icon": "Rx",
+    "color": "#059669",
+    "subcategories": [
+      "pharmacy"
+    ],
+    "selectors": [
+      "amenity=pharmacy"
+    ]
+  },
+  {
+    "id": "police",
+    "label": "Police stations",
+    "icon": "P",
+    "color": "#1d4ed8",
+    "subcategories": [
+      "police"
+    ],
+    "selectors": [
+      "amenity=police"
+    ]
+  },
+  {
+    "id": "atm",
+    "label": "ATMs",
+    "icon": "₹",
+    "color": "#7c3aed",
+    "subcategories": [
+      "atm"
+    ],
+    "selectors": [
+      "amenity=atm",
+      "amenity=bank,atm=yes"
+    ]
+  },
+  {
+    "id": "education",
+    "label": "Schools & education",
+    "icon": "E",
+    "color": "#0284c7",
+    "subcategories": [
+      "school",
+      "college",
+      "university",
+      "kindergarten"
+    ],
+    "selectors": [
+      "amenity=school",
+      "amenity=college",
+      "amenity=university",
+      "amenity=kindergarten"
+    ]
+  },
+  {
+    "id": "fuel",
+    "label": "Fuel stations",
+    "icon": "F",
+    "color": "#b45309",
+    "subcategories": [
+      "fuel"
+    ],
+    "selectors": [
+      "amenity=fuel"
+    ]
+  },
+  {
+    "id": "park",
+    "label": "Parks & gardens",
+    "icon": "♧",
+    "color": "#15803d",
+    "subcategories": [
+      "park",
+      "garden"
+    ],
+    "selectors": [
+      "leisure=park",
+      "leisure=garden"
+    ]
+  },
+  {
+    "id": "bus",
+    "label": "Bus stops",
+    "icon": "B",
+    "color": "#2563eb",
+    "subcategories": [
+      "bus_stop",
+      "bus_station",
+      "platform"
+    ],
+    "selectors": [
+      "highway=bus_stop",
+      "amenity=bus_station",
+      "public_transport=platform,bus=yes"
+    ]
+  },
+  {
+    "id": "metro",
+    "label": "Metro",
+    "icon": "M",
+    "color": "#9333ea",
+    "subcategories": [
+      "station",
+      "subway_entrance"
+    ],
+    "selectors": [
+      "railway=station,station=subway",
+      "railway=subway_entrance"
+    ]
+  },
+  {
+    "id": "rail",
+    "label": "Railway",
+    "icon": "R",
+    "color": "#0891b2",
+    "subcategories": [
+      "station",
+      "halt"
+    ],
+    "selectors": [
+      "railway=station,station!=subway",
+      "railway=halt"
+    ]
+  },
+  {
+    "id": "food",
+    "label": "Restaurants & cafés",
+    "icon": "C",
+    "color": "#ea580c",
+    "subcategories": [
+      "restaurant",
+      "fast_food",
+      "cafe"
+    ],
+    "selectors": [
+      "amenity=restaurant",
+      "amenity=fast_food",
+      "amenity=cafe"
+    ]
+  },
+  {
+    "id": "fire",
+    "label": "Fire stations",
+    "icon": "!",
+    "color": "#e11d48",
+    "subcategories": [
+      "fire_station"
+    ],
+    "selectors": [
+      "amenity=fire_station"
+    ]
+  }
+]

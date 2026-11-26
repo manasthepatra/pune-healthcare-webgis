@@ -1,0 +1,33 @@
+# secrets and local config
+.env
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# node
+node_modules/
+client/dist/
+*.log
+
+# raw / bulky data (re-created by analysis scripts); every committed file must stay < 100 MB
+data/raw/
+data/walk.graphml
+data/dem/*.hgt
+data/dem/*.hgt.gz
+data/worldpop/
+data/export/
+analysis/out/*.graphml
+
+# local caches
+.npm-cache/
+.dependency-downloads/
+cache/
+
+# old project snapshot is kept locally only (baseline for Q3/Q6/Q9)
+legacy/node_modules/
+legacy/dist/
+legacy/*.zip
+legacy/.env.legacy

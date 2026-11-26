@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgis/postgis:16-3.5
+    environment:
+      POSTGRES_DB: nearby
+      POSTGRES_USER: nearby
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nearby_local}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nearby -d nearby"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  geoserver:
+    image: docker.osgeo.org/geoserver:2.28.2
+    environment:
+      SKIP_DEMO_DATA: "true"
+      GEOSERVER_ADMIN_USER: ${GEOSERVER_USER:-admin}
+      GEOSERVER_ADMIN_PASSWORD: ${GEOSERVER_PASSWORD:-nearby_geoserver_local}
+    ports:
+      - "127.0.0.1:${GEOSERVER_PORT:-8081}:8080"
+    volumes:
+      - geoserver_data:/opt/geoserver_data
+    depends_on:
+      db:
+        condition: service_healthy
+  app:
+    build: .
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3001
+      DATABASE_URL: postgres://nearby:${POSTGRES_PASSWORD:-nearby_local}@db:5432/nearby
+      GEOSERVER_URL: http://geoserver:8080/geoserver
+      GEOSERVER_DB_HOST: db
+      GEOSERVER_USER: ${GEOSERVER_USER:-admin}
+      GEOSERVER_PASSWORD: ${GEOSERVER_PASSWORD:-nearby_geoserver_local}
+      COVERAGE_NAME: ${COVERAGE_NAME:-Pune}
+      COVERAGE_SOUTH: ${COVERAGE_SOUTH:-18.40}
+      COVERAGE_WEST: ${COVERAGE_WEST:-73.73}
+      COVERAGE_NORTH: ${COVERAGE_NORTH:-18.65}
+      COVERAGE_EAST: ${COVERAGE_EAST:-74.04}
+      CENTER_LAT: ${CENTER_LAT:-18.5204}
+      CENTER_LNG: ${CENTER_LNG:-73.8567}
+      OVERPASS_URL: ${OVERPASS_URL:-https://overpass-api.de/api/interpreter}
+      OVERPASS_FALLBACK_URLS: ${OVERPASS_FALLBACK_URLS-https://overpass.private.coffee/api/interpreter,https://maps.mail.ru/osm/tools/overpass/api/interpreter}
+    ports:
+      - "127.0.0.1:3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  postgis_data:
+  geoserver_data:
+
