@@ -1,0 +1,12 @@
+# Q10 baseline: ONE stage on a FULL base image. Node, npm, the build toolchain, node_modules and the
+# source all stay in the final image. Compare its size with the multi-stage Dockerfile.
+#   docker build -t webgis-client:full -f client/Dockerfile.single client
+FROM node:22
+WORKDIR /app
+COPY . .
+RUN npm install --no-audit --no-fund
+ARG VITE_MODE=static
+ENV VITE_MODE=$VITE_MODE
+RUN npm run build && npm install -g serve
+EXPOSE 80
+CMD ["serve", "-s", "dist", "-l", "80"]

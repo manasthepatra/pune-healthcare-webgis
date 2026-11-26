@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Who can't walk to healthcare? - Central Pune</title>
+  </head>
+  <body>
+    <div id="map" role="application" aria-label="Map of walking access to healthcare services"></div>
+
+    <aside id="panel">
+      <h1>Walking access to healthcare</h1>
+      <p class="sub" id="mode-note"></p>
+
+      <fieldset>
+        <legend>Layers</legend>
+        <label><input type="checkbox" id="l-osm" checked /> OSM basemap</label>
+        <label><input type="checkbox" id="l-dem" data-server="1" /> DEM (WMS, GeoServer)</label>
+        <label><input type="checkbox" id="l-hex" checked /> Hex: walking distance to nearest service (vector tiles)</label>
+        <label><input type="checkbox" id="l-svc" checked /> Services (click for pop-up)</label>
+        <label><input type="checkbox" id="l-area" checked /> Study area outline</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Hex settings</legend>
+        <div class="row">
+          Resolution
+          <label><input type="radio" name="res" value="9" checked /> H3 9</label>
+          <label><input type="radio" name="res" value="8" /> H3 8</label>
+        </div>
+        <div class="row">
+          Walker
+          <label><input type="radio" name="spd" value="1200" checked /> 4.8 km/h (1.2 km)</label>
+          <label><input type="radio" name="spd" value="900" /> 3.6 km/h (0.9 km)</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Buildings (performance test, zoom in &ge; 13)</legend>
+        <label><input type="radio" name="bld" value="off" checked /> Off</label>
+        <label><input type="radio" name="bld" value="wms" data-server="1" /> (a) Tiled WMS PNG</label>
+        <label><input type="radio" name="bld" value="wfs" data-server="1" /> (b) One WFS GeoJSON request</label>
+        <label><input type="radio" name="bld" value="mvt" /> (c) Vector tiles (MVT)</label>
+      </fieldset>
+
+      <div id="legend"></div>
+      <p class="attr">Data &copy; OpenStreetMap contributors (ODbL). Population is a building-footprint proxy unless WorldPop was supplied.</p>
+    </aside>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
