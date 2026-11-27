@@ -48,9 +48,21 @@
     }
   },
   "union_area_km2": {
-    "network_isochrones": 13.698822009281084,
+    "network_isochrones": 13.644126051543036,
     "straight_buffers": 18.69217205717211,
-    "study_area": 18.69217205717211
+    "study_area": 18.69217205717211,
+    "street_ribbon_within_study_area": 13.719469205343799,
+    "per_clinic_isochrone_as_share_of_circle": {
+      "median": 0.3739962954322478,
+      "min": 0.05290773302415542,
+      "max": 0.5841390083285659
+    },
+    "per_clinic_isochrone_as_share_of_street_area_inside_its_circle": {
+      "median": 0.528103620826732,
+      "min": 0.07481309210568021,
+      "max": 0.6895298124203256
+    },
+    "note": "isochrone = streets reachable within the threshold, thickened 30 m (so land >30 m from any street counts as unreachable)"
   },
   "q7": {
     "threshold_m": 1200.0,

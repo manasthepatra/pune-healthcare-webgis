@@ -246,7 +246,7 @@ def make_isochrones(net: Network, thr=THR):
 
     rows = []
     for r in net.svc.itertuples():
-        reach = nx.single_source_dijkstra_path_length(H, r.node, cutoff=max(thr - r.snap_m, 0))
+        reach = nx.single_source_dijkstra_path_length(H, r.node, cutoff=max(thr - r.snap_m, 0), weight="length")
         parts = [Point(H.nodes[r.node]["x"], H.nodes[r.node]["y"]).buffer(EDGE_BUFFER_M)]
         seen = set(reach)
         for u in seen:
