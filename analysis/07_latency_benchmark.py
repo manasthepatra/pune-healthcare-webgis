@@ -39,7 +39,7 @@ def run(endpoint, params, points):
     with requests.Session() as s:
         for lon, lat in points[:5]:                      # warm-up (connection pool, caches) - not counted
             s.get(f"{API}/{endpoint}", params={"lon": lon, "lat": lat, **params}, timeout=30)
-        for lon, lat in points:
+        for lon, lat in points[5:]:                      # the 50 measured clicks (the first 5 were the warm-up)
             t0 = time.perf_counter()
             r = s.get(f"{API}/{endpoint}", params={"lon": lon, "lat": lat, **params}, timeout=30)
             rt.append((time.perf_counter() - t0) * 1000)

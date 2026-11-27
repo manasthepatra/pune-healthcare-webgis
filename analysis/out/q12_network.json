@@ -1,0 +1,79 @@
+{
+  "scenario": "q12",
+  "baseUrl": "https://manasthepatra.github.io/pune-healthcare-webgis/",
+  "runs_per_cell": 3,
+  "chrome_viewport": "1400x900",
+  "cache": "disabled",
+  "when": "2026-11-27T03:10:22.511Z",
+  "cells": {
+    "PMTiles z14 (+buildings)": {
+      "requests": 67,
+      "kb": 2287.1,
+      "decoded_kb": 2274.1,
+      "seconds": 2.47,
+      "runs": [
+        {
+          "requests": 67,
+          "kb": 2287.1,
+          "decoded_kb": 2274.1,
+          "seconds": 2.56,
+          "failed": 0
+        },
+        {
+          "requests": 67,
+          "kb": 2287.2,
+          "decoded_kb": 2274.1,
+          "seconds": 2.32,
+          "failed": 0
+        },
+        {
+          "requests": 67,
+          "kb": 2286.9,
+          "decoded_kb": 2274.1,
+          "seconds": 2.47,
+          "failed": 0
+        }
+      ]
+    }
+  },
+  "all_resources_kb": 4758.1,
+  "all_requests": 140,
+  "sample_pmtiles_requests": [
+    {
+      "url": "https://manasthepatra.github.io/pune-healthcare-webgis/data/map.pmtiles",
+      "range_header": "bytes=0-16383",
+      "status": 206,
+      "kb": 16.4
+    },
+    {
+      "url": "https://manasthepatra.github.io/pune-healthcare-webgis/data/map.pmtiles",
+      "range_header": "bytes=789766-982288",
+      "status": 206,
+      "kb": 188.2
+    },
+    {
+      "url": "https://manasthepatra.github.io/pune-healthcare-webgis/data/map.pmtiles",
+      "range_header": "bytes=707947-789765",
+      "status": 206,
+      "kb": 80.3
+    },
+    {
+      "url": "https://manasthepatra.github.io/pune-healthcare-webgis/data/map.pmtiles",
+      "range_header": "bytes=678729-699303",
+      "status": 206,
+      "kb": 20.2
+    },
+    {
+      "url": "https://manasthepatra.github.io/pune-healthcare-webgis/data/map.pmtiles",
+      "range_header": "bytes=699304-707946",
+      "status": 206,
+      "kb": 8.6
+    },
+    {
+      "url": "https://manasthepatra.github.io/pune-healthcare-webgis/data/map.pmtiles",
+      "range_header": "bytes=983135-985677",
+      "status": 206,
+      "kb": 2.6
+    }
+  ]
+}

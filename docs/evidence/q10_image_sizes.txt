@@ -42,3 +42,9 @@ WORKDIR /app                                    8.19kB
 CMD ["node"]                                    0B
 ENTRYPOINT ["docker-entrypoint.sh"]             0B
 COPY docker-entrypoint.sh /usr/local/bin/ # …   20.5kB
+
+$ docker history webgis-client:full --no-trunc  (4 largest layers, sorted)
+619MB   RUN /bin/sh -c set -ex;  apt-get update;  apt-get install -y --no-install-recommends   autoconf   automake   bzip2   default-libmysq
+213MB   RUN /bin/sh -c ARCH= && dpkgArch="$(dpkg --print-architecture)"   && case "${dpkgArch##*-}" in     amd64) ARCH='x64';;     ppc64el) 
+194MB   RUN /bin/sh -c set -eux;  apt-get update;  apt-get install -y --no-install-recommends   git   mercurial   openssh-client   subversio
+133MB   # debian.sh --arch 'amd64' out/ 'bookworm' '@1793827419'

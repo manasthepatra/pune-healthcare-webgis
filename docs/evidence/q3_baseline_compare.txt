@@ -1,0 +1,8 @@
+earlier-project snapshot (2026-10-20T09:02:18Z): 213 healthcare features in the area, 4 without a name
+new PostGIS table: 223 features in the area, 5 without a name
+in both: 193   only in earlier snapshot: 20   only in new data: 30
+note: the earlier app displayed unnamed features as '<category> nearby' instead of flagging them.
+
+classification of the differences (ad-hoc check, see ANSWERS.md Q3):
+- only in earlier snapshot: 20 -> all 20 are near-duplicates merged away in the new table
+- only in new data: 30 -> 12 doctors, 7 dentist, 3 alternative, 3 pharmacy, 2 centre, 2 clinic;hospital, 1 nursing_home

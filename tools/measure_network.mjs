@@ -146,10 +146,13 @@ try {
       console.log(`| ${label} | ${c(12)} | ${c(14)} | ${c(16)} |`)
     }
   } else {
-    const match = (u) => /map\.pmtiles/.test(u)
+    // MATCH (regexp), EXTRA (extra query string), LABEL, OUT let the same scenario measure the local server stack for comparison
+    const re = new RegExp(process.env.MATCH || 'map\.pmtiles')
+    const match = (u) => re.test(u)
+    const label = process.env.LABEL || 'PMTiles z14'
     const runs = [], detail = []
     for (let i = 0; i < RUNS; i++) {
-      await load(`${baseUrl.replace(/\/$/, '')}/?z=14`, match)
+      await load(`${baseUrl.replace(/\/$/, '')}/?z=14${process.env.EXTRA || ''}`, match)
       runs.push(summarise(match))
       if (!detail.length) {
         detail.push(...[...reqs.values()].filter((r) => match(r.url) && r.method === 'GET').slice(0, 6)
@@ -158,12 +161,12 @@ try {
       out.all_resources_kb = +([...reqs.values()].reduce((a, r) => a + r.bytes, 0) / 1024).toFixed(1)
       out.all_requests = reqs.size
     }
-    out.cells['PMTiles z14'] = aggregate(runs)
+    out.cells[label] = aggregate(runs)
     out.sample_pmtiles_requests = detail
     console.log(JSON.stringify(out, null, 2))
   }
 } finally {
-  writeFileSync(`analysis/out/${scenario}_network.json`, JSON.stringify(out, null, 2))
+  writeFileSync(`analysis/out/${process.env.OUT || scenario + '_network'}.json`, JSON.stringify(out, null, 2))
   ws.close()
   chrome.kill()
   await sleep(500)

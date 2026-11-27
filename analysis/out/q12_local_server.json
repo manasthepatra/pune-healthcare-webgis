@@ -1,0 +1,79 @@
+{
+  "scenario": "q12",
+  "baseUrl": "http://127.0.0.1:4174",
+  "runs_per_cell": 3,
+  "chrome_viewport": "1400x900",
+  "cache": "disabled",
+  "when": "2026-11-27T03:10:44.298Z",
+  "cells": {
+    "server z14 tiles+features (+buildings)": {
+      "requests": 32,
+      "kb": 568.9,
+      "decoded_kb": 1184.8,
+      "seconds": 2.52,
+      "runs": [
+        {
+          "requests": 32,
+          "kb": 567.7,
+          "decoded_kb": 1184.8,
+          "seconds": 2.85,
+          "failed": 0
+        },
+        {
+          "requests": 32,
+          "kb": 569.3,
+          "decoded_kb": 1184.8,
+          "seconds": 2.46,
+          "failed": 0
+        },
+        {
+          "requests": 32,
+          "kb": 568.9,
+          "decoded_kb": 1184.8,
+          "seconds": 2.52,
+          "failed": 0
+        }
+      ]
+    }
+  },
+  "all_resources_kb": 2977.7,
+  "all_requests": 104,
+  "sample_pmtiles_requests": [
+    {
+      "url": "http://127.0.0.1:9000/collections/public.study_area/items.json",
+      "range_header": null,
+      "status": 200,
+      "kb": 0.5
+    },
+    {
+      "url": "http://127.0.0.1:9000/collections/public.services/items.json?limit=5000",
+      "range_header": null,
+      "status": 200,
+      "kb": 19.8
+    },
+    {
+      "url": "http://127.0.0.1:7800/public.hex_r9/13/5776/3667.pbf",
+      "range_header": null,
+      "status": 200,
+      "kb": 11.7
+    },
+    {
+      "url": "http://127.0.0.1:7800/public.hex_r9/13/5776/3666.pbf",
+      "range_header": null,
+      "status": 200,
+      "kb": 6.9
+    },
+    {
+      "url": "http://127.0.0.1:7800/public.hex_r9/13/5777/3667.pbf",
+      "range_header": null,
+      "status": 200,
+      "kb": 2.6
+    },
+    {
+      "url": "http://127.0.0.1:7800/public.hex_r9/13/5777/3666.pbf",
+      "range_header": null,
+      "status": 200,
+      "kb": 1.8
+    }
+  ]
+}
