@@ -61,3 +61,8 @@ DATABASE_URL = os.getenv(
     "DATABASE_URL",
     "postgresql+psycopg2://webgis:%s@localhost:5432/webgis" % os.getenv("POSTGRES_PASSWORD", "change_me"),
 )
+# bonus: separate PostGIS + pgRouting database (compose service routing_db, host port 5434)
+ROUTING_DATABASE_URL = os.getenv(
+    "ROUTING_DATABASE_URL",
+    "postgresql+psycopg2://webgis:%s@localhost:5434/webgis" % os.getenv("POSTGRES_PASSWORD", "change_me"),
+)

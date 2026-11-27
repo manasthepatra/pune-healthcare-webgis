@@ -1,0 +1,9 @@
+{
+  "raw_points_in_area": 243,
+  "raw_points_total": 475,
+  "after_merge_in_area": 223,
+  "after_merge_total": 432,
+  "merged_pairs": 44,
+  "dedup_distance_m": 25,
+  "similarity": 0.8
+}

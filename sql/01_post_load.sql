@@ -8,6 +8,11 @@ UPDATE study_area SET geom_utm = ST_Transform(geom, 32643);
 ALTER TABLE services ADD COLUMN IF NOT EXISTS geom_utm geometry(Point, 32643);
 UPDATE services SET geom_utm = ST_Transform(geom, 32643);
 
+-- services_raw = the points BEFORE near-duplicate merging (kept only so Q3 can compare before/after)
+ALTER TABLE services_raw ADD COLUMN IF NOT EXISTS geom_utm geometry(Point, 32643);
+UPDATE services_raw SET geom_utm = ST_Transform(geom, 32643);
+CREATE INDEX IF NOT EXISTS services_raw_utm_gix ON services_raw USING gist (geom_utm);
+
 ALTER TABLE buildings ADD COLUMN IF NOT EXISTS geom_utm geometry(Geometry, 32643);
 UPDATE buildings SET geom_utm = ST_Transform(geom, 32643);
 ALTER TABLE buildings ADD COLUMN IF NOT EXISTS area_m2 double precision;
