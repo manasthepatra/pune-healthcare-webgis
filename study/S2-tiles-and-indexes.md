@@ -30,5 +30,5 @@ bbox test using the index to discard far-away rows, (2) the exact geometry test 
 
 ## H3 hexagons
 H3 divides the globe into hexagons (plus 12 pentagons) with 16 nested resolutions (0-15, aperture 7). Every neighbour is the same distance away,
-which is why delivery companies use it for aggregation. Res 8: edge about 0.46 km, area about 0.74 km^2. Res 9: edge about 0.17 km, area about 0.105 km^2.
+which is why delivery companies use it for aggregation. Res 8: edge about 0.53 km, area about 0.74 km^2. Res 9: edge about 0.20 km, area about 0.105 km^2 (H3 v4 values; older v3 tables list 0.46 / 0.17 km).
 Cells are identified by a 64-bit index such as `89...fff`; a cell's parent/children give cheap roll-ups.
