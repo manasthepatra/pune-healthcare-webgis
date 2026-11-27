@@ -1,0 +1,4 @@
+GML 3.2 : 205.9 KB
+GeoJSON : 85.2 KB
+first GML point    : <gml:pos>18.5251 73.8696</gml:pos>
+first GeoJSON point: [73.8696, 18.5251] | numberMatched = 218 | features = 218

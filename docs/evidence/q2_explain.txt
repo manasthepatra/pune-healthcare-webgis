@@ -1,0 +1,101 @@
+DROP INDEX
+ANALYZE
+                                                                      QUERY PLAN                                                                       
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=21240971.52..21241006.37 rows=223 width=20) (actual time=1012.520..1022.532 rows=223 loops=1)
+   Group Key: s.osm_id
+   Buffers: shared hit=245265, temp read=609 written=611
+   ->  Gather Merge  (cost=21240971.52..21241003.03 rows=223 width=20) (actual time=1012.458..1022.421 rows=446 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=245265, temp read=609 written=611
+         ->  Partial GroupAggregate  (cost=21239971.51..21239977.93 rows=223 width=20) (actual time=986.122..995.976 rows=223 loops=2)
+               Group Key: s.osm_id
+               Buffers: shared hit=245265, temp read=609 written=611
+               ->  Sort  (cost=21239971.51..21239972.91 rows=559 width=23) (actual time=986.038..991.196 rows=74024 loops=2)
+                     Sort Key: s.osm_id
+                     Sort Method: external merge  Disk: 2440kB
+                     Buffers: shared hit=245265, temp read=609 written=611
+                     Worker 0:  Sort Method: external merge  Disk: 2432kB
+                     ->  Nested Loop  (cost=0.00..21239946.00 rows=559 width=23) (actual time=275.066..935.145 rows=74024 loops=2)
+                           Join Filter: st_dwithin(s.geom_utm, b.geom_utm, '500'::double precision)
+                           Rows Removed by Join Filter: 1357078
+                           Buffers: shared hit=245208
+                           ->  Parallel Seq Scan on buildings b  (cost=0.00..1418.50 rows=7550 width=150) (actual time=0.003..1.112 rows=6418 loops=2)
+                                 Buffers: shared hit=1343
+                           ->  Seq Scan on services s  (cost=0.00..23.32 rows=223 width=44) (actual time=0.045..0.078 rows=223 loops=12835)
+                                 Filter: in_area
+                                 Rows Removed by Filter: 209
+                                 Buffers: shared hit=243865
+ Planning:
+   Buffers: shared hit=167
+ Planning Time: 1.140 ms
+ JIT:
+   Functions: 29
+   Options: Inlining true, Optimization true, Expressions true, Deforming true
+   Timing: Generation 1.657 ms, Inlining 163.040 ms, Optimization 250.077 ms, Emission 136.844 ms, Total 551.618 ms
+ Execution Time: 1043.363 ms
+(33 rows)
+
+CREATE INDEX
+ANALYZE
+                                                                      QUERY PLAN                                                                       
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=3991.03..3993.26 rows=223 width=20) (actual time=134.082..134.104 rows=223 loops=1)
+   Group Key: s.osm_id
+   Batches: 1  Memory Usage: 48kB
+   Buffers: shared hit=133410 read=71
+   ->  Nested Loop  (cost=0.28..3986.28 rows=950 width=23) (actual time=0.083..115.522 rows=148048 loops=1)
+         Buffers: shared hit=133410 read=71
+         ->  Seq Scan on services s  (cost=0.00..23.32 rows=223 width=44) (actual time=0.009..0.143 rows=223 loops=1)
+               Filter: in_area
+               Rows Removed by Filter: 209
+               Buffers: shared hit=19
+         ->  Index Scan using buildings_geom_utm_gix on buildings b  (cost=0.28..17.76 rows=1 width=150) (actual time=0.018..0.471 rows=664 loops=223)
+               Index Cond: (geom_utm && st_expand(s.geom_utm, '500'::double precision))
+               Filter: st_dwithin(s.geom_utm, geom_utm, '500'::double precision)
+               Rows Removed by Filter: 161
+               Buffers: shared hit=133391 read=71
+ Planning:
+   Buffers: shared hit=47
+ Planning Time: 0.773 ms
+ Execution Time: 134.170 ms
+(19 rows)
+
+                                                                      QUERY PLAN                                                                       
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=21310257.70..21314497.49 rows=223 width=20) (actual time=1002.520..1012.800 rows=223 loops=1)
+   Group Key: s.osm_id
+   Buffers: shared hit=245265, temp read=609 written=611
+   ->  Gather Merge  (cost=21310257.70..21314494.14 rows=223 width=20) (actual time=1002.471..1012.683 rows=446 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=245265, temp read=609 written=611
+         ->  Partial GroupAggregate  (cost=21309257.69..21313469.04 rows=223 width=20) (actual time=980.577..990.061 rows=223 loops=2)
+               Group Key: s.osm_id
+               Buffers: shared hit=245265, temp read=609 written=611
+               ->  Sort  (cost=21309257.69..21310660.73 rows=561216 width=23) (actual time=980.512..985.476 rows=74024 loops=2)
+                     Sort Key: s.osm_id
+                     Sort Method: external merge  Disk: 2480kB
+                     Buffers: shared hit=245265, temp read=609 written=611
+                     Worker 0:  Sort Method: external merge  Disk: 2392kB
+                     ->  Nested Loop  (cost=0.00..21244155.12 rows=561216 width=23) (actual time=217.762..917.026 rows=74024 loops=2)
+                           Join Filter: (st_distance(s.geom_utm, b.geom_utm) < '500'::double precision)
+                           Rows Removed by Join Filter: 1357078
+                           Buffers: shared hit=245208
+                           ->  Parallel Seq Scan on buildings b  (cost=0.00..1418.50 rows=7550 width=150) (actual time=0.005..1.042 rows=6418 loops=2)
+                                 Buffers: shared hit=1343
+                           ->  Seq Scan on services s  (cost=0.00..23.32 rows=223 width=44) (actual time=0.036..0.070 rows=223 loops=12835)
+                                 Filter: in_area
+                                 Rows Removed by Filter: 209
+                                 Buffers: shared hit=243865
+ Planning:
+   Buffers: shared hit=33
+ Planning Time: 0.148 ms
+ JIT:
+   Functions: 29
+   Options: Inlining true, Optimization true, Expressions true, Deforming true
+   Timing: Generation 1.792 ms, Inlining 71.735 ms, Optimization 222.748 ms, Emission 140.926 ms, Total 437.200 ms
+ Execution Time: 1014.479 ms
+(33 rows)
+

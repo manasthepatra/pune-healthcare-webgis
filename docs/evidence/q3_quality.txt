@@ -1,0 +1,49 @@
+    stage     | total | unnamed | pct_unnamed 
+--------------+-------+---------+-------------
+ before merge |   243 |       5 |         2.1
+ after merge  |   223 |       5 |         2.2
+(2 rows)
+
+    stage     | pairs_within_25m 
+--------------+------------------
+ before merge |               44
+ after merge  |               24
+(2 rows)
+
+    osm_id    |                       name                        |   other_id   |                   other_name                   | metres 
+--------------+---------------------------------------------------+--------------+------------------------------------------------+--------
+ n8261471097  | Sinkar Cardiac Care                               | n9528906079  | Dr. Advait Kothurkar                           |    2.6
+ n8261471097  | Sinkar Cardiac Care                               | w359987032   | Specklin Superspeciality Centre                |    3.1
+ n9528906079  | Dr. Advait Kothurkar                              | w359987032   | Specklin Superspeciality Centre                |    3.8
+ n7050627585  | Sant Dnyaneswar Medical Education Research Centre | n7051345893  | Shaishav Clinic                                |    4.7
+ n10564329793 | Ishwar Heart Clinic                               | w359998821   | eshavari clinic                                |    5.2
+ n8261638091  | SNEH CHILD CARE CLINIC                            | n8375570707  | Partly cloudy Dr. Sanjay Patil | Spine Surgeon |    5.5
+ n8375570707  | Partly cloudy Dr. Sanjay Patil | Spine Surgeon    | n9620616342  | Dr. Bharat Patel Clinic                        |    6.0
+ n7651453348  | Dr. Chetan Deshmukh                               | n9189721323  | Deshmukh Clinic & Research Centre              |    6.4
+ n7063805549  | Namrata Clinic                                    | n7651453409  | Kirad Hospital                                 |    7.5
+ n7050627585  | Sant Dnyaneswar Medical Education Research Centre | n7651453379  | Shaishav Children's Hospital                   |    8.2
+ n7651453328  | Dr. Otiv Clinic                                   | n9620616342  | Dr. Bharat Patel Clinic                        |    8.7
+ n7651453328  | Dr. Otiv Clinic                                   | n8375570707  | Partly cloudy Dr. Sanjay Patil | Spine Surgeon |    9.1
+ n7051345893  | Shaishav Clinic                                   | n7651453379  | Shaishav Children's Hospital                   |   10.0
+ n8261638091  | SNEH CHILD CARE CLINIC                            | n9620616342  | Dr. Bharat Patel Clinic                        |   10.4
+ n7049842800  | Dr. Tekawade Eye Clinic                           | n7068429388  | Karne Hospital Pvt Ltd                         |   13.1
+ n14335218056 | Bright smiles dental care                         | n14335220310 | मोरया मेडिकल                                    |   13.8
+ n7651453328  | Dr. Otiv Clinic                                   | n8261638091  | SNEH CHILD CARE CLINIC                         |   14.6
+ n11383243430 | Orthopaedic Speciality Care                       | n9528906079  | Dr. Advait Kothurkar                           |   14.8
+ n11383243430 | Orthopaedic Speciality Care                       | w359987032   | Specklin Superspeciality Centre                |   15.5
+ n11383243430 | Orthopaedic Speciality Care                       | n8261471097  | Sinkar Cardiac Care                            |   17.1
+ n7066374692  | Pabalkar Nursing Home                             | n8502820800  | Dr. Pramod Bhilare Orthopaedic Spine Clinic    |   21.7
+ n7651453378  | Todkar Hospital                                   | n7651453414  | Dr. Sunil Sathe                                |   23.8
+ n7048871849  | Purandare Hospital, Pune                          | n7651453422  | Chavan Hospital                                |   23.8
+ n5832548497  | Arihant Medicals                                  | n7080269671  | Ram Krishna Hospital, Pune                     |   23.8
+(24 rows)
+
+   osm_id    |                 name                 | service_type |    lat    |    lon    
+-------------+--------------------------------------+--------------+-----------+-----------
+ n7651453412 | Chajed Hospital                      | hospital     | 18.504510 | 73.862819
+ n7044175339 | Chaitanya Stem Cell Center           | hospital     | 18.500019 | 73.850398
+ n7651453327 | Shree Datta Clinic                   | clinic       | 18.504769 | 73.842890
+ n7651453326 | Sabane Hospital                      | hospital     | 18.510703 | 73.843434
+ n8257748847 | Dr Barve's The Bone and Joint Clinic | clinic       | 18.510981 | 73.836355
+(5 rows)
+

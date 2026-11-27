@@ -1,0 +1,44 @@
+$ docker images | findstr webgis-client
+REPOSITORY                     TAG                  SIZE      CREATED
+webgis-client                  slim                 79.7MB    2 minutes ago
+webgis-client                  full                 1.8GB     7 days ago
+
+$ docker history webgis-client:slim
+CREATED BY                                      SIZE
+HEALTHCHECK {Test:[CMD-SHELL wget -q -O /dev…   0B
+EXPOSE [80/tcp]                                 0B
+COPY /app/dist /usr/share/nginx/html # build…   3.53MB
+COPY nginx.conf /etc/nginx/conf.d/default.co…   20.5kB
+RUN /bin/sh -c set -x     && apkArch="$(cat …   38.7MB
+ENV NJS_RELEASE=1                               0B
+ENV NJS_VERSION=0.8.10                          0B
+CMD ["nginx" "-g" "daemon off;"]                0B
+STOPSIGNAL SIGQUIT                              0B
+EXPOSE map[80/tcp:{}]                           0B
+ENTRYPOINT ["/docker-entrypoint.sh"]            0B
+COPY 30-tune-worker-processes.sh /docker-ent…   16.4kB
+COPY 20-envsubst-on-templates.sh /docker-ent…   12.3kB
+COPY 15-local-resolvers.envsh /docker-entryp…   12.3kB
+COPY 10-listen-on-ipv6-by-default.sh /docker…   12.3kB
+COPY docker-entrypoint.sh / # buildkit          8.19kB
+RUN /bin/sh -c set -x     && addgroup -g 101…   5.36MB
+ENV DYNPKG_RELEASE=1                            0B
+ENV PKG_RELEASE=1                               0B
+ENV NGINX_VERSION=1.27.5                        0B
+LABEL maintainer=NGINX Docker Maintainers <d…   0B
+CMD ["/bin/sh"]                                 0B
+ADD alpine-minirootfs-3.21.3-x86_64.tar.gz /…   8.5MB
+
+$ docker history webgis-client:full  (largest layers)
+CREATED BY                                      SIZE
+CMD ["serve" "-s" "dist" "-l" "80"]             0B
+EXPOSE [80/tcp]                                 0B
+RUN |1 VITE_MODE=static /bin/sh -c npm run b…   21MB
+ENV VITE_MODE=static                            0B
+ARG VITE_MODE=static                            0B
+RUN /bin/sh -c npm install --no-audit --no-f…   104MB
+COPY . . # buildkit                             5.83MB
+WORKDIR /app                                    8.19kB
+CMD ["node"]                                    0B
+ENTRYPOINT ["docker-entrypoint.sh"]             0B
+COPY docker-entrypoint.sh /usr/local/bin/ # …   20.5kB

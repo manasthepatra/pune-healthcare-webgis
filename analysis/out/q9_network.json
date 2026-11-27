@@ -1,0 +1,271 @@
+{
+  "scenario": "q9",
+  "baseUrl": "http://127.0.0.1:4174",
+  "runs_per_cell": 3,
+  "chrome_viewport": "1400x900",
+  "cache": "disabled",
+  "when": "2026-11-27T03:00:00.249Z",
+  "cells": {
+    "WMS PNG z12": {
+      "requests": 28,
+      "kb": 167.2,
+      "decoded_kb": 151.9,
+      "seconds": 0.87,
+      "runs": [
+        {
+          "requests": 28,
+          "kb": 167.2,
+          "decoded_kb": 151.8,
+          "seconds": 0.87,
+          "failed": 0
+        },
+        {
+          "requests": 28,
+          "kb": 167.3,
+          "decoded_kb": 151.9,
+          "seconds": 0.88,
+          "failed": 0
+        },
+        {
+          "requests": 28,
+          "kb": 167.2,
+          "decoded_kb": 151.9,
+          "seconds": 0.83,
+          "failed": 0
+        }
+      ]
+    },
+    "WMS PNG z14": {
+      "requests": 28,
+      "kb": 904.8,
+      "decoded_kb": 888.8,
+      "seconds": 2.1,
+      "runs": [
+        {
+          "requests": 28,
+          "kb": 904.8,
+          "decoded_kb": 888.7,
+          "seconds": 1.54,
+          "failed": 0
+        },
+        {
+          "requests": 28,
+          "kb": 904.8,
+          "decoded_kb": 888.8,
+          "seconds": 2.75,
+          "failed": 0
+        },
+        {
+          "requests": 28,
+          "kb": 904.8,
+          "decoded_kb": 888.8,
+          "seconds": 2.1,
+          "failed": 0
+        }
+      ]
+    },
+    "WMS PNG z16": {
+      "requests": 24,
+      "kb": 883.8,
+      "decoded_kb": 869.9,
+      "seconds": 0.78,
+      "runs": [
+        {
+          "requests": 24,
+          "kb": 883.8,
+          "decoded_kb": 869.9,
+          "seconds": 0.8,
+          "failed": 0
+        },
+        {
+          "requests": 24,
+          "kb": 883.8,
+          "decoded_kb": 869.9,
+          "seconds": 0.71,
+          "failed": 0
+        },
+        {
+          "requests": 24,
+          "kb": 883.7,
+          "decoded_kb": 869.9,
+          "seconds": 0.78,
+          "failed": 0
+        }
+      ]
+    },
+    "WFS GeoJSON z12": {
+      "requests": 1,
+      "kb": 541.6,
+      "decoded_kb": 4572.3,
+      "seconds": 1.08,
+      "runs": [
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 1.12,
+          "failed": 0
+        },
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 0.92,
+          "failed": 0
+        },
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 1.08,
+          "failed": 0
+        }
+      ]
+    },
+    "WFS GeoJSON z14": {
+      "requests": 1,
+      "kb": 541.6,
+      "decoded_kb": 4572.3,
+      "seconds": 0.9,
+      "runs": [
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 0.84,
+          "failed": 0
+        },
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 1.29,
+          "failed": 0
+        },
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 0.9,
+          "failed": 0
+        }
+      ]
+    },
+    "WFS GeoJSON z16": {
+      "requests": 1,
+      "kb": 541.6,
+      "decoded_kb": 4572.3,
+      "seconds": 1.1,
+      "runs": [
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 1.1,
+          "failed": 0
+        },
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 1.7,
+          "failed": 0
+        },
+        {
+          "requests": 1,
+          "kb": 541.6,
+          "decoded_kb": 4572.3,
+          "seconds": 0.74,
+          "failed": 0
+        }
+      ]
+    },
+    "MVT z12": {
+      "requests": 12,
+      "kb": 336.9,
+      "decoded_kb": 728.3,
+      "seconds": 0.58,
+      "runs": [
+        {
+          "requests": 12,
+          "kb": 330.3,
+          "decoded_kb": 728.3,
+          "seconds": 1.38,
+          "failed": 0
+        },
+        {
+          "requests": 12,
+          "kb": 336.9,
+          "decoded_kb": 728.3,
+          "seconds": 0.58,
+          "failed": 0
+        },
+        {
+          "requests": 12,
+          "kb": 336.9,
+          "decoded_kb": 728.3,
+          "seconds": 0.52,
+          "failed": 0
+        }
+      ]
+    },
+    "MVT z14": {
+      "requests": 12,
+      "kb": 493.8,
+      "decoded_kb": 945.2,
+      "seconds": 0.6,
+      "runs": [
+        {
+          "requests": 12,
+          "kb": 493.8,
+          "decoded_kb": 945.2,
+          "seconds": 0.6,
+          "failed": 0
+        },
+        {
+          "requests": 12,
+          "kb": 495,
+          "decoded_kb": 945.2,
+          "seconds": 0.64,
+          "failed": 0
+        },
+        {
+          "requests": 12,
+          "kb": 493.3,
+          "decoded_kb": 945.2,
+          "seconds": 0.41,
+          "failed": 0
+        }
+      ]
+    },
+    "MVT z16": {
+      "requests": 8,
+      "kb": 159.4,
+      "decoded_kb": 287.1,
+      "seconds": 0.32,
+      "runs": [
+        {
+          "requests": 8,
+          "kb": 159.3,
+          "decoded_kb": 287.1,
+          "seconds": 0.33,
+          "failed": 0
+        },
+        {
+          "requests": 8,
+          "kb": 159.4,
+          "decoded_kb": 287.1,
+          "seconds": 0.27,
+          "failed": 0
+        },
+        {
+          "requests": 8,
+          "kb": 159.4,
+          "decoded_kb": 287.1,
+          "seconds": 0.32,
+          "failed": 0
+        }
+      ]
+    }
+  }
+}

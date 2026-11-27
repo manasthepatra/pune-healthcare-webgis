@@ -1,0 +1,3 @@
+services layer, WMS 1.3.0 GetCapabilities:
+<EX_GeographicBoundingBox>           <westBoundLongitude>73.8167234</westBoundLongitude>           <eastBoundLongitude>73.890117</eastBoundLongitude>           <southBoundLatitude>18.4780996</southBoundLatitude>           <northBoundLatitude>18.552553</northBoundLatitude>         </EX_GeographicBoundingBox>
+<BoundingBox CRS="EPSG:4326" minx="18.4780996" miny="73.8167234" maxx="18.552553" maxy="73.890117"/>

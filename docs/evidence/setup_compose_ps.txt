@@ -1,0 +1,8 @@
+$ docker compose ps
+SERVICE          IMAGE                               STATUS                       PORTS
+api              webgis-api                          Up 11 seconds (healthy)      127.0.0.1:8010->8000/tcp
+db               postgis/postgis:16-3.5              Up About an hour (healthy)   127.0.0.1:5433->5432/tcp
+geoserver        docker.osgeo.org/geoserver:2.28.2   Up About an hour (healthy)   127.0.0.1:8081->8080/tcp
+pg_featureserv   pramsey/pg_featureserv:latest       Up 32 minutes (healthy)      127.0.0.1:9000->9000/tcp
+pg_tileserv      pramsey/pg_tileserv:latest          Up 32 minutes (healthy)      127.0.0.1:7800->7800/tcp
+routing_db       pgrouting/pgrouting:16-3.5-4.0.1    Up About an hour (healthy)   127.0.0.1:5434->5432/tcp

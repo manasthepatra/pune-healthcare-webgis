@@ -1,0 +1,57 @@
+=================== reset to a clean PVC-backed StatefulSet
+=================== RUN 1: StatefulSet with PersistentVolumeClaim (k8s/02-postgis.yaml)
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/client-5985447fb6-xnzpp   1/1     Running   0          57m
+pod/postgis-0                 1/1     Running   0          11s
+
+NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/data-postgis-0   Bound    pvc-fee58c28-57ab-4387-af3b-4758276433d3   2Gi        RWO            standard       <unset>                 11s
+NOTICE:  extension "postgis" already exists, skipping
+rows in services BEFORE delete: 432
+pod uid before: 1d882ebb-5518-4f97-8fee-a1efaae74702
+old pod uid: 1d882ebb-5518-4f97-8fee-a1efaae74702
+08:36:16.866  $ kubectl delete pod postgis-0
+08:36:17.272  postgis-0  uid=1d882ebb  Running/true
+08:36:18.081  postgis-0  uid=fbeebc78  Pending/false
+08:36:18.883  postgis-0  uid=fbeebc78  Running/false
+08:36:19.697  postgis-0  uid=fbeebc78  Running/false
+08:36:20.502  postgis-0  uid=fbeebc78  Running/false
+08:36:21.304  postgis-0  uid=fbeebc78  Running/false
+08:36:22.127  postgis-0  uid=fbeebc78  Running/false
+08:36:22.948  postgis-0  uid=fbeebc78  Running/false
+08:36:23.779  postgis-0  uid=fbeebc78  Running/false
+08:36:24.582  postgis-0  uid=fbeebc78  Running/true
+pod recreated and Ready after 7.8 s
+pod uid after:  fbeebc78-21b1-4887-b16e-56006b9ab240
+rows in services AFTER  delete: 432
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/client-5985447fb6-xnzpp   1/1     Running   0          57m
+pod/postgis-0                 1/1     Running   0          8s
+
+NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/data-postgis-0   Bound    pvc-fee58c28-57ab-4387-af3b-4758276433d3   2Gi        RWO            standard       <unset>                 21s
+
+=================== RUN 2: same StatefulSet but the PVC replaced by emptyDir (k8s/experiments/postgis-emptydir.yaml)
+NOTICE:  extension "postgis" already exists, skipping
+rows in services BEFORE delete: 432
+old pod uid: 3da76ec5-4e9e-40c6-9ea5-0d8f74805d9f
+08:36:34.498  $ kubectl delete pod postgis-0
+08:36:35.461  postgis-0  uid=3da76ec5  Succeeded/false
+08:36:36.615  postgis-0  uid=b5a8e78a  Pending/false
+08:36:37.553  postgis-0  uid=b5a8e78a  Running/false
+08:36:38.422  postgis-0  uid=b5a8e78a  Running/false
+08:36:39.331  postgis-0  uid=b5a8e78a  Running/false
+08:36:40.274  postgis-0  uid=b5a8e78a  Running/false
+08:36:41.235  postgis-0  uid=b5a8e78a  Running/false
+08:36:42.223  postgis-0  uid=b5a8e78a  Running/true
+pod recreated and Ready after 7.8 s
+rows in services AFTER  delete: ERROR:  relation "services" does not exist
+
+=================== restore the real manifest (the old PVC still holds the data from RUN 1)
+rows in services after restoring the PVC-backed StatefulSet: 432
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/client-5985447fb6-xnzpp   1/1     Running   0          58m
+pod/postgis-0                 1/1     Running   0          7s
+
+NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/data-postgis-0   Bound    pvc-fee58c28-57ab-4387-af3b-4758276433d3   2Gi        RWO            standard       <unset>                 47s
