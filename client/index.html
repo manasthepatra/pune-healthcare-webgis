@@ -15,7 +15,7 @@
       <fieldset>
         <legend>Layers</legend>
         <label><input type="checkbox" id="l-osm" checked /> OSM basemap</label>
-        <label><input type="checkbox" id="l-dem" data-server="1" /> DEM (WMS, GeoServer)</label>
+        <label><input type="checkbox" id="l-dem" /> DEM (live WMS locally; pre-rendered image on the static site)</label>
         <label><input type="checkbox" id="l-hex" checked /> Hex: walking distance to nearest service (vector tiles)</label>
         <label><input type="checkbox" id="l-svc" checked /> Services (click for pop-up)</label>
         <label><input type="checkbox" id="l-area" checked /> Study area outline</label>
@@ -41,6 +41,24 @@
         <label><input type="radio" name="bld" value="wms" data-server="1" /> (a) Tiled WMS PNG</label>
         <label><input type="radio" name="bld" value="wfs" data-server="1" /> (b) One WFS GeoJSON request</label>
         <label><input type="radio" name="bld" value="mvt" /> (c) Vector tiles (MVT)</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Walk-time explorer (live API)</legend>
+        <label><input type="checkbox" id="w-on" data-server="1" /> Click the map: where can I walk?</label>
+        <div class="row">
+          Minutes <input type="range" id="w-min" min="5" max="30" step="5" value="15" data-server="1" /> <output id="w-out">15</output>
+        </div>
+        <div class="row">
+          Outline
+          <select id="w-hull" data-server="1">
+            <option value="concave">concave hull</option>
+            <option value="convex">convex hull</option>
+            <option value="buffer">buffered streets</option>
+          </select>
+        </div>
+        <p class="sub" id="w-status">Needs the API (docker compose up). Walking speed 4.8 km/h.</p>
+        <ol id="w-list"></ol>
       </fieldset>
 
       <div id="legend"></div>

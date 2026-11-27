@@ -137,7 +137,13 @@ function addArea() {
 }
 
 function addDem() {
-  if (isStatic) return
+  if (isStatic) {
+    // no GeoServer on the static site: the same DEM style, pre-rendered once by GeoServer WMS (analysis/README: dem.png)
+    const [w, s, e, n] = [73.82986, 18.48986, 73.88014, 18.54014]
+    map.addSource('dem', { type: 'image', url: `${import.meta.env.BASE_URL}data/dem.png`, coordinates: [[w, n], [e, n], [e, s], [w, s]] })
+    map.addLayer({ id: 'dem', type: 'raster', source: 'dem', layout: { visibility: 'none' } }, 'hex9-fill')
+    return
+  }
   const q = 'service=WMS&version=1.1.1&request=GetMap&styles=&format=image/png&transparent=true' +
     `&layers=${cfg.workspace}:dem&srs=EPSG:3857&width=256&height=256&bbox={bbox-epsg-3857}`
   map.addSource('dem', { type: 'raster', tileSize: 256, tiles: [`${cfg.geoserver}/${cfg.workspace}/wms?${q}`] })
@@ -170,9 +176,66 @@ function setBuildings(mode) {
   }
 }
 
+
+// ---------------------------------------------------------------- walk-time explorer (bonus API: pgRouting + FastAPI)
+let walkPt = null
+let walkTimer
+function addWalk() {
+  if (isStatic) return
+  const empty = { type: 'FeatureCollection', features: [] }
+  map.addSource('walk-iso', { type: 'geojson', data: empty })
+  map.addSource('walk-pts', { type: 'geojson', data: empty })
+  map.addLayer({ id: 'walk-iso-fill', type: 'fill', source: 'walk-iso', paint: { 'fill-color': '#7c3aed', 'fill-opacity': 0.22 } }, 'services')
+  map.addLayer({ id: 'walk-iso-line', type: 'line', source: 'walk-iso', paint: { 'line-color': '#5b21b6', 'line-width': 2 } }, 'services')
+  map.addLayer({ id: 'walk-pts', type: 'circle', source: 'walk-pts',
+    paint: { 'circle-radius': ['case', ['==', ['get', 'role'], 'origin'], 7, 9],
+      'circle-color': ['case', ['==', ['get', 'role'], 'origin'], '#111827', '#ffffff'],
+      'circle-stroke-color': '#5b21b6', 'circle-stroke-width': 3 } })
+  map.on('click', (e) => {
+    if (!$('w-on').checked) return
+    walkPt = [e.lngLat.lng, e.lngLat.lat]
+    walkQuery()
+  })
+}
+
+async function walkQuery() {
+  if (!walkPt) return
+  const [lon, lat] = walkPt
+  const minutes = $('w-min').value
+  const hull = $('w-hull').value
+  const status = $('w-status')
+  status.textContent = 'asking the API ...'
+  const t0 = performance.now()
+  try {
+    const [iso, near] = await Promise.all([
+      fetch(`${cfg.api}/isochrone?lon=${lon}&lat=${lat}&minutes=${minutes}&hull=${hull}`).then((r) => { if (!r.ok) throw new Error(`isochrone HTTP ${r.status}`); return r.json() }),
+      fetch(`${cfg.api}/nearest?lon=${lon}&lat=${lat}&k=10&radius_m=${minutes * 80}`).then((r) => { if (!r.ok) throw new Error(`nearest HTTP ${r.status}`); return r.json() }),
+    ])
+    map.getSource('walk-iso').setData(iso)
+    map.getSource('walk-pts').setData({ type: 'FeatureCollection', features: [
+      { type: 'Feature', properties: { role: 'origin' }, geometry: { type: 'Point', coordinates: [lon, lat] } },
+      ...near.services.map((s) => ({ type: 'Feature', properties: { role: 'service' }, geometry: { type: 'Point', coordinates: [s.lon, s.lat] } })),
+    ] })
+    const list = $('w-list')
+    list.replaceChildren(...near.services.map((s) => {
+      const li = document.createElement('li')
+      li.append(document.createTextNode(s.name || '(no name tag)'))
+      const sp = document.createElement('span'); sp.textContent = ` ${s.walk_min} min (${Math.round(s.walk_m)} m)`
+      li.append(sp)
+      li.onclick = () => map.flyTo({ center: [s.lon, s.lat], zoom: Math.max(map.getZoom(), 16) })
+      return li
+    }))
+    status.textContent = `closest ${near.services.length} service(s) within ${minutes} min - reachable area ${iso.properties.area_km2} km2 ` +
+      `(db ${iso.properties.db_ms} ms, round trip ${Math.round(performance.now() - t0)} ms)`
+  } catch (err) {
+    status.textContent = `API not reachable: ${err.message}. Start it with: docker compose up -d api`
+  }
+}
+
 // ---------------------------------------------------------------- UI
 let activePopup
 function popup(lngLat, rows, link) {
+  if ($('w-on')?.checked) return
   const box = document.createElement('div')
   box.className = 'pop'
   rows.forEach(([k, v]) => {
@@ -225,6 +288,7 @@ map.on('load', () => {
   addHex(9)
   addDem() // inserted below the hex layers, so it must come after them
   addServices()
+  addWalk()
   syncHex()
   renderLegend()
   map.fitBounds([[cfg.bbox[0], cfg.bbox[1]], [cfg.bbox[2], cfg.bbox[3]]], { padding: 40, animate: false })
@@ -239,9 +303,18 @@ function applyPresets() {
   if (q.get('dem') === '1' && !$('l-dem').disabled) { $('l-dem').checked = true; vis('dem', true) }
   if (q.get('z')) map.jumpTo({ zoom: Number(q.get('z')), center: cfg.center })
   if (q.get('bld')) pick('bld', q.get('bld'))
+  if (q.get('walk') && !$('w-on').disabled) {   // ?walk=lon,lat&min=15&hull=concave
+    const [lo, la] = q.get('walk').split(',').map(Number)
+    $('w-on').checked = true; walkPt = [lo, la]
+    if (q.get('min')) { $('w-min').value = q.get('min'); $('w-out').textContent = q.get('min') }
+    if (q.get('hull')) $('w-hull').value = q.get('hull')
+    walkQuery()
+  }
 }
 map.once('idle', applyPresets)
 
+$('w-min').oninput = () => { $('w-out').textContent = $('w-min').value; clearTimeout(walkTimer); walkTimer = setTimeout(walkQuery, 150) }
+$('w-hull').onchange = walkQuery
 $('l-osm').onchange = (e) => vis('osm', e.target.checked)
 $('l-dem').onchange = (e) => vis('dem', e.target.checked)
 $('l-hex').onchange = syncHex

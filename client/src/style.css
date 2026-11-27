@@ -34,3 +34,7 @@ label.off { opacity: 0.45; cursor: not-allowed; }
 @media (max-width: 640px) {
   #panel { width: auto; right: 12px; max-height: 45%; top: auto; bottom: 12px; }
 }
+select { font: inherit; }
+#w-list { margin: 4px 0 0; padding-left: 20px; font-size: 12px; }
+#w-list li { margin: 1px 0; cursor: pointer; }
+#w-list li span { color: var(--muted); }
