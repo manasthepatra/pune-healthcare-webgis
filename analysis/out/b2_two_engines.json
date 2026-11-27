@@ -1,0 +1,126 @@
+{
+  "points": [
+    {
+      "point": 1,
+      "lon": 73.859929,
+      "lat": 18.531016,
+      "osmnx_m": 959.0,
+      "pgrouting_m": 959.0,
+      "diff_pct": 0.0,
+      "same_service": true,
+      "snap_osmnx_m": 150.2,
+      "snap_pgr_m": 150.2,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 2,
+      "lon": 73.866171,
+      "lat": 18.50401,
+      "osmnx_m": 486.6,
+      "pgrouting_m": 486.6,
+      "diff_pct": 0.0,
+      "same_service": true,
+      "snap_osmnx_m": 24.6,
+      "snap_pgr_m": 24.6,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 3,
+      "lon": 73.846851,
+      "lat": 18.529984,
+      "osmnx_m": 332.8,
+      "pgrouting_m": 332.8,
+      "diff_pct": 0.01,
+      "same_service": true,
+      "snap_osmnx_m": 58.5,
+      "snap_pgr_m": 58.5,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 4,
+      "lon": 73.866968,
+      "lat": 18.513783,
+      "osmnx_m": 286.5,
+      "pgrouting_m": 286.5,
+      "diff_pct": 0.0,
+      "same_service": true,
+      "snap_osmnx_m": 21.5,
+      "snap_pgr_m": 21.5,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 5,
+      "lon": 73.847127,
+      "lat": 18.506037,
+      "osmnx_m": 365.9,
+      "pgrouting_m": 365.9,
+      "diff_pct": 0.01,
+      "same_service": true,
+      "snap_osmnx_m": 32.1,
+      "snap_pgr_m": 32.1,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 6,
+      "lon": 73.845142,
+      "lat": 18.512731,
+      "osmnx_m": 196.4,
+      "pgrouting_m": 196.4,
+      "diff_pct": 0.01,
+      "same_service": true,
+      "snap_osmnx_m": 31.0,
+      "snap_pgr_m": 31.0,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 7,
+      "lon": 73.855166,
+      "lat": 18.517155,
+      "osmnx_m": 229.6,
+      "pgrouting_m": 229.6,
+      "diff_pct": 0.0,
+      "same_service": true,
+      "snap_osmnx_m": 32.4,
+      "snap_pgr_m": 32.4,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 8,
+      "lon": 73.874872,
+      "lat": 18.526898,
+      "osmnx_m": 265.0,
+      "pgrouting_m": 265.0,
+      "diff_pct": 0.0,
+      "same_service": true,
+      "snap_osmnx_m": 5.7,
+      "snap_pgr_m": 5.7,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 9,
+      "lon": 73.859787,
+      "lat": 18.534707,
+      "osmnx_m": 1412.7,
+      "pgrouting_m": 1412.7,
+      "diff_pct": 0.0,
+      "same_service": true,
+      "snap_osmnx_m": 15.4,
+      "snap_pgr_m": 15.4,
+      "cause_if_over_10pct": ""
+    },
+    {
+      "point": 10,
+      "lon": 73.843627,
+      "lat": 18.501258,
+      "osmnx_m": 343.9,
+      "pgrouting_m": 343.9,
+      "diff_pct": 0.01,
+      "same_service": true,
+      "snap_osmnx_m": 33.7,
+      "snap_pgr_m": 33.7,
+      "cause_if_over_10pct": ""
+    }
+  ],
+  "n_over_10pct": 0,
+  "graph_note": "NetworkX graph: 13134 nodes / 17130 edges (largest component, self loops kept); pgRouting graph: loaded from the same GraphML, undirected, self loops dropped, all components kept"
+}

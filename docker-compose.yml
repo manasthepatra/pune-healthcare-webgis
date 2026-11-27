@@ -83,9 +83,48 @@ services:
       retries: 10
     networks: [gis]
 
+  # Bonus: separate PostGIS+pgRouting database for routing (the main db image has no pgRouting and its Debian base
+  # no longer receives pgRouting packages), loaded by analysis/06_load_routing_graph.py
+  routing_db:
+    image: pgrouting/pgrouting:16-3.5-4.0.1
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-webgis}
+      POSTGRES_USER: ${POSTGRES_USER:-webgis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:${ROUTING_PORT:-5434}:5432"
+    volumes:
+      - routing_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks: [gis]
+
+  # Bonus: live walking-isochrone API (pgRouting + FastAPI), http://localhost:8010/docs
+  api:
+    build: ./api
+    environment:
+      DATABASE_DSN: postgresql://${POSTGRES_USER:-webgis}:${POSTGRES_PASSWORD}@routing_db:5432/${POSTGRES_DB:-webgis}
+      UTM_EPSG: "32643"
+    ports:
+      - "127.0.0.1:${API_PORT:-8010}:8000"
+    depends_on:
+      routing_db:
+        condition: service_healthy
+    healthcheck:      # the python image has no curl/wget: ask /health with the standard library
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: on-failure
+    networks: [gis]
+
 networks:
   gis:
 
 volumes:
+  routing_data:
   postgis_data:
   geoserver_data:

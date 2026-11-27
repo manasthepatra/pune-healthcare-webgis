@@ -1,0 +1,43 @@
+{
+  "api": "http://api:8000",
+  "clicks": 50,
+  "seed": 42,
+  "results": {
+    "isochrone_naive": {
+      "n": 55,
+      "roundtrip_p50_ms": 496.7,
+      "roundtrip_p95_ms": 1073.2,
+      "db_p50_ms": 493.0,
+      "db_p95_ms": 1069.9,
+      "api_plus_network_p50_ms": 3.6,
+      "api_plus_network_p95_ms": 5.0
+    },
+    "nearest_naive": {
+      "n": 55,
+      "roundtrip_p50_ms": 112.9,
+      "roundtrip_p95_ms": 142.8,
+      "db_p50_ms": 110.2,
+      "db_p95_ms": 140.4,
+      "api_plus_network_p50_ms": 2.4,
+      "api_plus_network_p95_ms": 2.8
+    },
+    "isochrone_bbox": {
+      "n": 55,
+      "roundtrip_p50_ms": 114.5,
+      "roundtrip_p95_ms": 230.6,
+      "db_p50_ms": 111.3,
+      "db_p95_ms": 227.2,
+      "api_plus_network_p50_ms": 2.9,
+      "api_plus_network_p95_ms": 3.7
+    },
+    "nearest_bbox": {
+      "n": 55,
+      "roundtrip_p50_ms": 8.7,
+      "roundtrip_p95_ms": 14.3,
+      "db_p50_ms": 6.4,
+      "db_p95_ms": 10.7,
+      "api_plus_network_p50_ms": 2.3,
+      "api_plus_network_p95_ms": 3.5
+    }
+  }
+}

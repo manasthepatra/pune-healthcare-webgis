@@ -1,0 +1,30 @@
+[
+  {
+    "polygon": "convex hull",
+    "area_km2": 2.936,
+    "vs_buffered_pct": 18.9,
+    "claimed_but_not_near_a_street_km2": 0.506,
+    "share_of_polygon_not_near_a_street_pct": 17.2
+  },
+  {
+    "polygon": "concave hull, ratio 0.8",
+    "area_km2": 2.763,
+    "vs_buffered_pct": 11.9,
+    "claimed_but_not_near_a_street_km2": 0.383,
+    "share_of_polygon_not_near_a_street_pct": 13.9
+  },
+  {
+    "polygon": "concave hull, ratio 0.3",
+    "area_km2": 2.782,
+    "vs_buffered_pct": 12.7,
+    "claimed_but_not_near_a_street_km2": 0.393,
+    "share_of_polygon_not_near_a_street_pct": 14.1
+  },
+  {
+    "polygon": "buffered edges (30 m)",
+    "area_km2": 2.468,
+    "vs_buffered_pct": 0.0,
+    "claimed_but_not_near_a_street_km2": 0.0,
+    "share_of_polygon_not_near_a_street_pct": 0.0
+  }
+]
