@@ -124,6 +124,34 @@ class Network:
 
 
 # ------------------------------------------------------------------ Q6
+
+def find_barriers(line_utm):
+    """OSM features (river, rail, motorway/trunk, wall, military/railway land) crossing the straight line - candidates only."""
+    poly = gpd.GeoSeries([line_utm.buffer(25)], crs=EPSG).to_crs(4326).iloc[0]
+    tags = {"waterway": ["river", "stream", "canal"], "railway": ["rail", "light_rail", "subway"],
+            "highway": ["motorway", "trunk"], "barrier": ["wall", "fence", "city_wall"], "landuse": ["military", "railway"]}
+    for url in ("https://overpass-api.de/api", "https://overpass.private.coffee/api"):
+        ox.settings.overpass_url = url
+        try:
+            f = ox.features_from_polygon(poly, tags=tags)
+            break
+        except ox._errors.InsufficientResponseError:   # Overpass answered: nothing of these types there
+            return ["none of the checked OSM barrier types (river, railway, motorway/trunk, wall, military/railway land) "
+                    "crosses the straight line - look at the street layout (dead ends, one long detour) on the map"]
+        except Exception as exc:  # network/Overpass problems must not stop the analysis
+            print("  barrier lookup failed on", url, str(exc).splitlines()[0][:80])
+    else:
+        return ["lookup failed (Overpass unavailable) - identify the barrier from the map"]
+    f = f.reset_index()
+    f = f[f.to_crs(EPSG).geometry.intersects(line_utm.buffer(5))]
+    out = []
+    for r in f.itertuples():
+        kind = next((f"{k}={getattr(r, k)}" for k in tags if isinstance(getattr(r, k, None), str)), "?")
+        nm = getattr(r, "name", None)
+        out.append(f"{kind} {nm if isinstance(nm, str) else '(unnamed)'} [{r.element[0]}{r.id}]")
+    return sorted(set(out)) or ["none of the checked OSM barrier types crosses the straight line"]
+
+
 def q6(net: Network, area_utm, svc_all, svc_tree, n=30):
     rng = np.random.default_rng(C.RANDOM_SEED)
     minx, miny, maxx, maxy = area_utm.bounds
@@ -141,26 +169,34 @@ def q6(net: Network, area_utm, svc_all, svc_tree, n=30):
                        "network_m": d_net, "network_nearest": id_net})
     df["different"] = df.straight_nearest != df.network_nearest
     df["ratio"] = df.network_m / df.straight_m
+    df["extra_m"] = df.network_m - df.straight_m
     df.to_csv(C.OUT / "q6_points.csv", index=False)
-    worst = df.loc[df.ratio.idxmax()]
+
+    def case(row, stem, title):
+        sl = svc_all.set_index("osm_id").loc[row.straight_nearest]
+        barriers = find_barriers(LineString([(row.x, row.y), (sl.x, sl.y)]))
+        draw_case(net, svc_all, row, stem, title)
+        return {"straight_m": float(row.straight_m), "network_m": float(row.network_m), "ratio": float(row.ratio),
+                "extra_walk_m": float(row.extra_m), "straight_nearest": row.straight_nearest,
+                "network_nearest": row.network_nearest, "nearest_service_differs": bool(row.straight_nearest != row.network_nearest),
+                "point_utm": [float(row.x), float(row.y)], "barrier_candidates": barriers,
+                "map": f"analysis/out/{stem}.png"}
+
     summary = {
         "n_points": n,
         "n_different_nearest": int(df.different.sum()),
         "median_ratio": float(df.ratio.median()),
         "max_ratio": float(df.ratio.max()),
-        "worst_point_utm": [float(worst.x), float(worst.y)],
-        "worst_straight_m": float(worst.straight_m),
-        "worst_network_m": float(worst.network_m),
-        "worst_straight_nearest": worst.straight_nearest,
-        "worst_network_nearest": worst.network_nearest,
+        # the two ways to read "worst case": the longest extra walk, and the largest ratio (often a close neighbour behind a wall)
+        "worst_case_longest_extra_walk": case(df.loc[df.extra_m.idxmax()], "q6_worst_case", "Q6 worst case: longest extra walk"),
+        "worst_case_max_ratio": case(df.loc[df.ratio.idxmax()], "q6_max_ratio_case", "Q6 largest ratio"),
     }
     (C.OUT / "q6_summary.json").write_text(json.dumps(summary, indent=2))
-    draw_worst_case(net, svc_all, worst)
     print("Q6", json.dumps(summary, indent=2))
     return summary
 
 
-def draw_worst_case(net: Network, svc_all, worst):
+def draw_case(net: Network, svc_all, worst, stem, title):
     H = net.H
     s_line = svc_all.set_index("osm_id").loc[worst.straight_nearest]
     s_net = svc_all.set_index("osm_id").loc[worst.network_nearest]
@@ -171,7 +207,7 @@ def draw_worst_case(net: Network, svc_all, worst):
     coords = [(worst.x, worst.y)] + [(H.nodes[n]["x"], H.nodes[n]["y"]) for n in route] + [(s_net.x, s_net.y)]
     route_line = LineString(coords)
     gpd.GeoDataFrame({"kind": ["network_route"]}, geometry=[route_line], crs=EPSG).to_crs(4326).to_file(
-        C.OUT / "q6_worst_case_route.geojson", driver="GeoJSON")
+        C.OUT / f"{stem}_route.geojson", driver="GeoJSON")
     minx, miny, maxx, maxy = route_line.union(Point(s_line.x, s_line.y)).bounds
     pad = 350
     fig, ax = plt.subplots(figsize=(9, 9))
@@ -191,9 +227,9 @@ def draw_worst_case(net: Network, svc_all, worst):
     ax.set_xlim(minx - pad, maxx + pad)
     ax.set_ylim(miny - pad, maxy + pad)
     ax.set_aspect("equal")
-    ax.set_title(f"Q6 worst case: ratio {worst.ratio:.2f}  (name the barrier from this map)")
+    ax.set_title(f"{title}: ratio {worst.ratio:.2f}, walk {worst.network_m:.0f} m vs {worst.straight_m:.0f} m straight")
     ax.legend(loc="lower left", fontsize=8)
-    fig.savefig(C.OUT / "q6_worst_case.png", dpi=150, bbox_inches="tight")
+    fig.savefig(C.OUT / f"{stem}.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -235,21 +271,20 @@ def hex_cells(area_wgs, res):
 
 
 def population_per_cell(cells, res, bld_wgs, hex_gdf_wgs):
-    """WorldPop sum per hex if available, else building footprint area (proxy)."""
+    """WorldPop people per hex if data/worldpop/population.tif exists, else building footprint area (proxy)."""
     if C.WORLDPOP_TIF.exists():
         import rasterio
-        from rasterio.mask import mask
-        pops = []
         with rasterio.open(C.WORLDPOP_TIF) as ds:
-            for g in hex_gdf_wgs.geometry:
-                try:
-                    arr, _ = mask(ds, [g.__geo_interface__], crop=True, nodata=0)
-                    a = arr[0].astype("float64")
-                    a[a < 0] = 0
-                    pops.append(float(a.sum()))
-                except ValueError:  # no overlap
-                    pops.append(0.0)
-        return pd.Series(pops, index=cells), False
+            arr = ds.read(1).astype("float64")
+            tr, nodata = ds.transform, ds.nodata
+        if nodata is not None:
+            arr[arr == nodata] = 0
+        arr[arr < 0] = 0
+        rows, cols = np.nonzero(arr > 0)
+        xs, ys = rasterio.transform.xy(tr, rows, cols)          # pixel centres (lon, lat)
+        idx = [h3.latlng_to_cell(y, x, res) for x, y in zip(xs, ys)]
+        s = pd.Series(arr[rows, cols]).groupby(idx).sum()
+        return s.reindex(cells).fillna(0.0), False
     idx = [h3.latlng_to_cell(y, x, res) for x, y in zip(bld_wgs.x, bld_wgs.y)]
     s = pd.Series(bld_wgs.area_m2.to_numpy()).groupby(idx).sum()
     return s.reindex(cells).fillna(0.0), True
@@ -344,6 +379,7 @@ def main(write_db=True):
         g = w.groupby("ward").agg(pop=("pop", "sum"), pd=("pd", "sum"))
         g["mean_dist_m"] = g.pd / g["pop"]
         g["beyond"] = g.mean_dist_m > THR
+        g["pct_pop_beyond_cells"] = w.assign(b=w["pop"] * (~w.covered_48)).groupby("ward")["b"].sum() / g["pop"] * 100
         q7["by_ward_pct_beyond"] = float(100 * g.loc[g.beyond, "pop"].sum() / g["pop"].sum())
         g.drop(columns="pd").to_csv(C.OUT / "q7_by_ward.csv")
     else:

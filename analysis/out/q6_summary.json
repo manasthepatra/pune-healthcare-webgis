@@ -1,14 +1,42 @@
 {
   "n_points": 30,
-  "n_different_nearest": 11,
+  "n_different_nearest": 9,
   "median_ratio": 1.5662546535967463,
   "max_ratio": 7.592137869896267,
-  "worst_point_utm": [
-    378995.8575126902,
-    2045516.8000546945
-  ],
-  "worst_straight_m": 47.08138613534254,
-  "worst_network_m": 357.44837464534316,
-  "worst_straight_nearest": "n7051344982",
-  "worst_network_nearest": "n7051344982"
+  "worst_case_longest_extra_walk": {
+    "straight_m": 470.1206417625913,
+    "network_m": 882.7312355958284,
+    "ratio": 1.8776695962259056,
+    "extra_walk_m": 412.6105938332371,
+    "straight_nearest": "n10172977883",
+    "network_nearest": "n10172977883",
+    "nearest_service_differs": false,
+    "point_utm": [
+      379748.8641557168,
+      2048985.6504894053
+    ],
+    "barrier_candidates": [
+      "railway=rail (unnamed) [w216122185]",
+      "waterway=river Mutha [w23016562]",
+      "waterway=stream Manik [w1304296304]"
+    ],
+    "map": "analysis/out/q6_worst_case.png"
+  },
+  "worst_case_max_ratio": {
+    "straight_m": 47.08138613534254,
+    "network_m": 357.44837464534316,
+    "ratio": 7.592137869896267,
+    "extra_walk_m": 310.3669885100006,
+    "straight_nearest": "n7051344982",
+    "network_nearest": "n7051344982",
+    "nearest_service_differs": false,
+    "point_utm": [
+      378995.8575126902,
+      2045516.8000546945
+    ],
+    "barrier_candidates": [
+      "none of the checked OSM barrier types (river, railway, motorway/trunk, wall, military/railway land) crosses the straight line - look at the street layout (dead ends, one long detour) on the map"
+    ],
+    "map": "analysis/out/q6_max_ratio_case.png"
+  }
 }

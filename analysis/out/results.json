@@ -3,39 +3,67 @@
   "utm_epsg": 32643,
   "threshold_m": 1200.0,
   "threshold_elderly_m": 900.0,
-  "services_total_with_margin": 475,
-  "services_in_area": 243,
+  "services_total_with_margin": 432,
+  "services_in_area": 223,
   "q6": {
     "n_points": 30,
-    "n_different_nearest": 11,
+    "n_different_nearest": 9,
     "median_ratio": 1.5662546535967463,
     "max_ratio": 7.592137869896267,
-    "worst_point_utm": [
-      378995.8575126902,
-      2045516.8000546945
-    ],
-    "worst_straight_m": 47.08138613534254,
-    "worst_network_m": 357.44837464534316,
-    "worst_straight_nearest": "n7051344982",
-    "worst_network_nearest": "n7051344982"
+    "worst_case_longest_extra_walk": {
+      "straight_m": 470.1206417625913,
+      "network_m": 882.7312355958284,
+      "ratio": 1.8776695962259056,
+      "extra_walk_m": 412.6105938332371,
+      "straight_nearest": "n10172977883",
+      "network_nearest": "n10172977883",
+      "nearest_service_differs": false,
+      "point_utm": [
+        379748.8641557168,
+        2048985.6504894053
+      ],
+      "barrier_candidates": [
+        "railway=rail (unnamed) [w216122185]",
+        "waterway=river Mutha [w23016562]",
+        "waterway=stream Manik [w1304296304]"
+      ],
+      "map": "analysis/out/q6_worst_case.png"
+    },
+    "worst_case_max_ratio": {
+      "straight_m": 47.08138613534254,
+      "network_m": 357.44837464534316,
+      "ratio": 7.592137869896267,
+      "extra_walk_m": 310.3669885100006,
+      "straight_nearest": "n7051344982",
+      "network_nearest": "n7051344982",
+      "nearest_service_differs": false,
+      "point_utm": [
+        378995.8575126902,
+        2045516.8000546945
+      ],
+      "barrier_candidates": [
+        "none of the checked OSM barrier types (river, railway, motorway/trunk, wall, military/railway land) crosses the straight line - look at the street layout (dead ends, one long detour) on the map"
+      ],
+      "map": "analysis/out/q6_max_ratio_case.png"
+    }
   },
   "union_area_km2": {
-    "network_isochrones": 13.698822009281088,
+    "network_isochrones": 13.698822009281084,
     "straight_buffers": 18.69217205717211,
     "study_area": 18.69217205717211
   },
   "q7": {
     "threshold_m": 1200.0,
-    "population_unit": "m2 building footprint (PROXY)",
-    "by_network_r9_pct_beyond": 2.6363058732380282,
+    "population_unit": "people (WorldPop)",
+    "by_network_r9_pct_beyond": 0.4844194423831548,
     "by_buffer_r9_pct_beyond": 0.0,
     "by_network_r8_pct_beyond": 0.0,
     "by_buffer_r8_pct_beyond": 0.0,
-    "by_network_buildings_pct_beyond_(finest_unit)": 0.8559198412463054,
-    "by_ward_pct_beyond": "no analysis/area_wards.geojson provided - add it to aggregate by ward",
+    "by_network_buildings_pct_beyond_(finest_unit)": 0.8800469699232447,
+    "by_ward_pct_beyond": 0.0,
     "worst_served_populated_cell_r9": {
       "h3": "8960885030fffff",
-      "pop": 21442.02322467888,
+      "pop": 570.6050720214844,
       "dist_m": 1465.862439680181
     }
   },
@@ -44,39 +72,39 @@
     "threshold_m_3_6kmh": 900.0,
     "r8": {
       "pct_beyond_4_8": 0.0,
-      "pct_beyond_3_6": 1.9196908017822802,
-      "coverage_lost_pp": 1.9196908017822802
+      "pct_beyond_3_6": 1.3490196708604116,
+      "coverage_lost_pp": 1.3490196708604116
     },
     "r9": {
-      "pct_beyond_4_8": 2.6363058732380282,
-      "pct_beyond_3_6": 3.575054753233825,
-      "coverage_lost_pp": 0.9387488799957966
+      "pct_beyond_4_8": 0.4844194423831548,
+      "pct_beyond_3_6": 1.361234110825208,
+      "coverage_lost_pp": 0.8768146684420531
     },
     "newly_uncovered_cells_r9": 4,
     "top_newly_uncovered": [
       {
         "h3": "8960885050fffff",
-        "pop": 21691.787658696197,
+        "pop": 2673.218032836914,
         "dist_m": 938.3144083033939,
         "nearest_name": "Synergy Dental Clinic;synergy dental clinic"
       },
       {
         "h3": "89608850303ffff",
-        "pop": 6670.683138262963,
+        "pop": 1017.352897644043,
         "dist_m": 1108.74445502326,
         "nearest_name": "Naydu Rugnalay"
       },
       {
-        "h3": "89608850307ffff",
-        "pop": 2911.356647019139,
-        "dist_m": 1063.2047722058207,
-        "nearest_name": "Kawediya Hospital"
-      },
-      {
         "h3": "8960885033bffff",
-        "pop": 0.0,
+        "pop": 491.7906188964844,
         "dist_m": 1152.4680989610424,
         "nearest_name": "Sancheti Hospital"
+      },
+      {
+        "h3": "89608850307ffff",
+        "pop": 291.4748229980469,
+        "dist_m": 1063.2047722058207,
+        "nearest_name": "Kawediya Hospital"
       }
     ]
   }
